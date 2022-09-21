@@ -5,7 +5,7 @@ USE `e_commerce` ;
 -- Table `e_commerce`.`custommer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e_commerce`.`custommer` (
-  `id_custommer` INT NOT NULL,
+  `id_custommer` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_custommer`));
 
 
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `e_commerce`.`custommer` (
 -- Table `e_commerce`.`seller`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e_commerce`.`seller` (
-  `id_seller` INT NOT NULL,
+  `id_seller` INT NOT NULL AUTO_INCREMENT,
   `identification` VARCHAR(45) NOT NULL,
   `description` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_seller`));
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `e_commerce`.`seller` (
 -- Table `e_commerce`.`product`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e_commerce`.`product` (
-  `id_product` INT NOT NULL,
+  `id_product` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
   `price` FLOAT NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `e_commerce`.`product` (
 -- Table `e_commerce`.`cart`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e_commerce`.`cart` (
-  `id_cart` INT NOT NULL,
+  `id_cart` INT NOT NULL AUTO_INCREMENT,
   `custommer_id` INT NOT NULL,
   `creation_date` DATETIME NOT NULL,
   PRIMARY KEY (`id_cart`),
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `e_commerce`.`cart_has_product` (
 -- Table `e_commerce`.`supplier`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e_commerce`.`supplier` (
-  `id_supplier` INT NOT NULL,
+  `id_supplier` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `address` VARCHAR(255) NOT NULL,
   `phone_1` VARCHAR(45) NOT NULL,
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `e_commerce`.`product_has_supplier` (
 -- Table `e_commerce`.`stock`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e_commerce`.`stock` (
-  `id_stock` INT NOT NULL,
+  `id_stock` INT NOT NULL AUTO_INCREMENT,
   `address` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_stock`));
 
@@ -166,12 +166,13 @@ CREATE TABLE IF NOT EXISTS `e_commerce`.`person` (
   `email` VARCHAR(255) NOT NULL,
   `phone_1` VARCHAR(45) NOT NULL,
   `phone_2` VARCHAR(45) NULL,
+  `custommer_id` INT NOT NULL,
   PRIMARY KEY (`id_person`),
   CONSTRAINT `fk_person_custommer1`
-    FOREIGN KEY (`id_person`)
+    FOREIGN KEY (`custommer_id`)
     REFERENCES `e_commerce`.`custommer` (`id_custommer`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
@@ -186,19 +187,20 @@ CREATE TABLE IF NOT EXISTS `e_commerce`.`entity` (
   `phone_1` VARCHAR(45) NOT NULL,
   `phone_2` VARCHAR(45) NULL,
   `phone_3` VARCHAR(45) NULL,
+  `custommer_id` INT NOT NULL,
   PRIMARY KEY (`id_entity`),
   CONSTRAINT `fk_entity_custommer1`
-    FOREIGN KEY (`id_entity`)
+    FOREIGN KEY (`custommer_id`)
     REFERENCES `e_commerce`.`custommer` (`id_custommer`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
 -- Table `e_commerce`.`payment_card`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e_commerce`.`payment_card` (
-  `id_payment_card` INT NOT NULL,
+  `id_payment_card` INT NOT NULL AUTO_INCREMENT,
   `number` INT NOT NULL,
   `card_owner` VARCHAR(100) NOT NULL,
   `secure_key` INT NOT NULL,
